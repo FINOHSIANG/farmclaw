@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Logs
+*.log
+
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Node (Dashboard)
+farmclaw-dashboard/node_modules/
+farmclaw-dashboard/dist/
+farmclaw-dashboard/build/
+farmclaw-dashboard/.svelte-kit/
+farmclaw-dashboard/.env
+farmclaw-dashboard/.env.*
+farmclaw-dashboard/!.env.example
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
