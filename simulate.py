@@ -2,100 +2,126 @@ import asyncio
 import json
 import websockets
 import random
-import time
 import uuid
+import os
+import sys
 
-# A script to inject mock activity into the FARMCLAW gateway to populate the Svelte Dashboard
+# 向 FARMCLAW 网关注入模拟活动，为 Svelte Dashboard 提供有机农业预览数据。
+#
+# 约定：
+# - 技能名与真实节点保持一致：sensor.read_data / weather.get_forecast，
+#   这样即使同时启动真实 iot_node / weather_node，网关也能正确路由。
+# - rpc_response.result 采用与 core.organic_models.build_telemetry 一致的结构，
+#   Dashboard 的 ingestTelemetry 可直接消费 (temperature/soil_moisture/light/ph)。
 
 GATEWAY_URI = "ws://127.0.0.1:18789"
 
+# 将仓库根加入路径，复用共享遥测模型，避免模拟形状与节点漂移
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+from core.organic_models import build_sensor_reading  # noqa: E402
+from nodes.weather_node import get_weather_forecast   # noqa: E402
+
+
+async def _send_rpc_roundtrip(agent_ws, target_ws, skill, kwargs, result):
+    """发起一次 RPC 请求并由模拟节点立即回包 (Dashboard 作为 observer 可看到全程)。"""
+    req_id = str(uuid.uuid4())
+    await agent_ws.send(json.dumps({
+        "type": "rpc_request",
+        "id": req_id,
+        "skill": skill,
+        "kwargs": kwargs,
+    }))
+    await asyncio.sleep(1.5)
+    await target_ws.send(json.dumps({
+        "type": "rpc_response",
+        "id": req_id,
+        "status": "success",
+        "result": result,
+    }))
+
+
 async def simulate_activity():
     try:
-        # Create separate connections for different simulated actors
         async with websockets.connect(GATEWAY_URI) as user_ws, \
                    websockets.connect(GATEWAY_URI) as agent_ws, \
                    websockets.connect(GATEWAY_URI) as iot_ws, \
                    websockets.connect(GATEWAY_URI) as weather_ws:
 
-            # 1. Register Mock Nodes
             print("Registering mock nodes...")
             await user_ws.send(json.dumps({"type": "register", "node_id": "web_client", "role": "client"}))
             await agent_ws.send(json.dumps({"type": "register", "node_id": "pi_agent_core", "role": "node", "skills": []}))
-            await iot_ws.send(json.dumps({"type": "register", "node_id": "farm_iot_sensors_v1", "role": "node", "skills": ["sensor.get_temperature", "sensor.get_moisture"]}))
-            await weather_ws.send(json.dumps({"type": "register", "node_id": "farm_weather_service_v1", "role": "node", "skills": ["weather.get_forecast"]}))
-            
+            await iot_ws.send(json.dumps({
+                "type": "register",
+                "node_id": "farm_iot_sensors_v1",
+                "role": "node",
+                "skills": ["sensor.read_data"],
+            }))
+            await weather_ws.send(json.dumps({
+                "type": "register",
+                "node_id": "farm_weather_service_v1",
+                "role": "node",
+                "skills": ["weather.get_forecast"],
+            }))
+
             await asyncio.sleep(2)
 
-            scenarios = [
-                {
-                    "user_msg": "帮我看看现在大棚一号的温度如何？",
-                    "agent_reply": "正在尝试连接大棚一号的传感器...",
-                    "skill": "sensor.get_temperature",
-                    "target_ws": iot_ws,
-                    "target_node": "farm_iot_sensors_v1",
-                    "mock_result": {"temperature": random.randint(20, 35)},
-                    "agent_final": "大棚一号现在的温度是正常的运行范围。"
-                },
-                {
-                    "user_msg": "土壤是不是变干了？",
-                    "agent_reply": "让我去读取一下湿度传感器。",
-                    "skill": "sensor.get_moisture",
-                    "target_ws": iot_ws,
-                    "target_node": "farm_iot_sensors_v1",
-                    "mock_result": {"soil_moisture": random.randint(30, 80)},
-                    "agent_final": "当前的土壤湿度适中，不需要立刻灌溉。"
-                },
-                {
-                    "user_msg": "明天农场会下雨吗？",
-                    "agent_reply": "我正在查询气象服务的数据...",
-                    "skill": "weather.get_forecast",
-                    "target_ws": weather_ws,
-                    "target_node": "farm_weather_service_v1",
-                    "mock_result": {"summary": "明天预计有多云转晴，降水概率 15%"},
-                    "agent_final": "根据气象数据，明天大概率不会下雨，是多云转晴的好天气。"
-                }
+            # 覆盖四种遥测维度 + 有机主题，循环驱动 Dashboard 面板
+            telemetry_fields = ["greenhouse-1", "field-a", "orchard-b"]
+            telemetry_metrics = ["temperature", "soil_moisture", "light", "ph"]
+
+            organic_chats = [
+                ("1号温室需要灌溉吗？", "结合土壤湿度与降雨概率，建议人工确认后再开启滴灌，避免夜间高湿。"),
+                ("B区果园有病虫害风险吗？", "温湿度组合偏高，建议检查叶背新梢，优先使用粘虫板与生物防治。"),
+                ("有机番茄批次什么时候采收？", "结合积温曲线，预计进入首采窗口，请提前准备追溯二维码。"),
+                ("帮我查一下有机追溯链路。", "批次已覆盖播种建档、投入品登记与巡检影像，本地哈希存证完成。"),
             ]
 
-            for i in range(10): # Run 10 loops of random activity
-                scenario = random.choice(scenarios)
-                print(f"--- Iteration {i+1} ---")
-                
-                # User asks
-                print(f"User: {scenario['user_msg']}")
-                await user_ws.send(json.dumps({"type": "chat", "content": scenario["user_msg"]}))
-                await asyncio.sleep(1.5)
+            for i in range(12):
+                print(f"--- Iteration {i + 1} ---")
 
-                # Agent acknowledges
-                print(f"Agent: {scenario['agent_reply']}")
-                await agent_ws.send(json.dumps({"type": "chat", "content": scenario['agent_reply']}))
-                await asyncio.sleep(1)
-
-                # Agent calls RPC
-                req_id = str(uuid.uuid4())
-                print(f"Agent calls RPC: {scenario['skill']}")
+                # 每轮先注入一条遥测 (temperature/soil_moisture/light/ph 轮询)
+                fid = telemetry_fields[i % len(telemetry_fields)]
+                metric = telemetry_metrics[i % len(telemetry_metrics)]
+                reading = build_sensor_reading(metric, fid)
+                metric_label = {"temperature": "温度", "soil_moisture": "土壤水分",
+                                "light": "光照", "ph": "酸碱度"}.get(metric, metric)
+                user_q = f"看一下 {fid} 的 {metric_label}"
+                await user_ws.send(json.dumps({"type": "chat", "content": user_q}))
+                await asyncio.sleep(1.0)
+                await agent_ws.send(json.dumps({"type": "chat", "content": f"正在读取 {fid} 的 {metric} 传感器..."}))
+                await _send_rpc_roundtrip(
+                    agent_ws, iot_ws, "sensor.read_data",
+                    {"sensor_type": metric, "field_id": fid},
+                    reading,
+                )
+                await asyncio.sleep(1.0)
                 await agent_ws.send(json.dumps({
-                    "type": "rpc_request",
-                    "id": req_id,
-                    "skill": scenario['skill']
+                    "type": "chat",
+                    "content": f"{reading['location']}（批次 {reading['crop_batch_id']}）"
+                               f"{metric_label}为 {reading['value']}{reading['unit']}，状态 {reading['status']}。",
                 }))
-                
-                # Wait a bit then Mock Node responds
-                await asyncio.sleep(2)
-                print(f"Node {scenario['target_node']} responds RPC")
-                await scenario['target_ws'].send(json.dumps({
-                    "type": "rpc_response",
-                    "id": req_id,
-                    "result": scenario["mock_result"]
-                }))
-                
-                await asyncio.sleep(1.5)
 
-                # Agent sends final chat response
-                print(f"Agent: {scenario['agent_final']}")
-                await agent_ws.send(json.dumps({"type": "chat", "content": scenario['agent_final']}))
-                
-                # Wait before next random activity
-                sleep_time = random.uniform(4, 8)
+                await asyncio.sleep(2.0)
+
+                # 每轮再注入一条有机主题对话
+                user_msg, agent_reply = organic_chats[i % len(organic_chats)]
+                print(f"User: {user_msg}")
+                await user_ws.send(json.dumps({"type": "chat", "content": user_msg}))
+                await asyncio.sleep(1.0)
+                print(f"Agent: {agent_reply}")
+                await agent_ws.send(json.dumps({"type": "chat", "content": agent_reply}))
+
+                # 偶尔注入一次气象预报 RPC，丰富事件流
+                if i % 3 == 0:
+                    weather_result = get_weather_forecast(location=fid)
+                    await _send_rpc_roundtrip(
+                        agent_ws, weather_ws, "weather.get_forecast",
+                        {"location": fid},
+                        weather_result,
+                    )
+
+                sleep_time = random.uniform(4, 7)
                 print(f"Waiting {sleep_time:.1f}s...\n")
                 await asyncio.sleep(sleep_time)
 
@@ -104,6 +130,7 @@ async def simulate_activity():
     except Exception as e:
         print(f"Simulation error: {e}")
 
+
 if __name__ == "__main__":
-    print("Starting FARMCLAW Simulation Generator...")
+    print("Starting FARMCLAW Organic AI Simulation Generator...")
     asyncio.run(simulate_activity())

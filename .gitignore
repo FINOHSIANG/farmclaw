@@ -33,3 +33,16 @@ farmclaw-dashboard/!.env.example
 .idea/
 *.swp
 *.swo
+progress.md
+tasks.md
+servers.local.md
+tmp/
+.mailbox/
+.agents/state/
+.agents/automations/
+.agents/docs/
+.agents/goal-forge/runs/
+AGENTS.md
+CODEBUDDY.md
+CLAUDE.md
+.zed/CONVENTIONS.md

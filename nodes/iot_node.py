@@ -1,61 +1,46 @@
 import asyncio
-import random
 import sys
 import os
 from typing import Dict, Any
 
-# 将父目录加入路径
+# 将父目录加入路径，便于 from core.organic_models import ...
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from nodes.base_node import BaseNode
+from core.organic_models import build_sensor_reading, resolve_field
+
 
 def read_sensor_data(**kwargs) -> Dict[str, Any]:
-    """模拟读取传感器数据的函数 (暴露为 Skill)"""
-    sensor_type = kwargs.get("sensor_type")
-    location = kwargs.get("location", "farm_default")
-    
-    print(f"[IoT] 物联网节点正在从 {location} 读取 {sensor_type} 数据...")
-    
-    value = 0.0
-    unit = ""
-    status = "normal"
-    
-    if sensor_type == "soil_moisture":
-        value = round(random.uniform(20.0, 60.0), 1)
-        unit = "%"
-        if value < 30.0: status = "dry - needs water"
-    elif sensor_type == "temperature":
-        value = round(random.uniform(15.0, 35.0), 1)
-        unit = "°C"
-    elif sensor_type == "humidity":
-        value = round(random.uniform(40.0, 90.0), 1)
-        unit = "%"
-    elif sensor_type == "ph":
-        value = round(random.uniform(5.5, 7.5), 1)
-        unit = ""
-    else:
-        return {"error": f"未知的传感器类型: {sensor_type}"}
+    """模拟读取农业传感器数据 (暴露为 Skill: sensor.read_data)。
 
-    location_map = {
-        "greenhouse_1": "1号温室",
-        "field_A": "A块农田",
-        "farm_default": "农田区"
-    }
-    display_location = location_map.get(location, location)
+    支持的 metric (sensor_type):
+      - temperature    温度
+      - soil_moisture  土壤水分
+      - humidity       空气湿度
+      - ph             土壤酸碱度
+      - light          光照强度 (lux)
+      - ec             电导率 (dS/m)
 
-    return {
-        "sensor": sensor_type,
-        "location": display_location,
-        "value": value,
-        "unit": unit,
-        "status": status
-    }
+    返回标准遥测结构，包含 field_id / crop_batch_id / metric / value / unit /
+    captured_at / source_node，可被 Dashboard 的 ingestTelemetry 直接消费，
+    也符合开发方案定义的田块级遥测规范。
+    """
+    metric = kwargs.get("sensor_type") or kwargs.get("metric")
+    field_id = kwargs.get("field_id") or kwargs.get("location", "greenhouse-1")
+
+    if not metric:
+        return {"error": "缺少参数 sensor_type"}
+
+    reading = build_sensor_reading(metric, field_id)
+    field = resolve_field(field_id)
+    print(f"[IoT] 读取 {field['name']}({field['field_id']}) 的 {metric} -> {reading}")
+    return reading
 
 
 if __name__ == "__main__":
     node = BaseNode(node_id="farm_iot_sensors_v1")
     node.register_skill("sensor.read_data", read_sensor_data)
-    
+
     try:
         asyncio.run(node.connect_and_run())
     except KeyboardInterrupt:
