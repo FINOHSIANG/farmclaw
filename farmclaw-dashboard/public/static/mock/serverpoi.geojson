@@ -1,0 +1,142 @@
+{
+  "type": "FeatureCollection",
+  "name": "gevernment",
+  "crs": {
+    "type": "name",
+    "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "facility_type": "warehouse",
+        "name": "种子仓库",
+        "area": 1200,
+        "manager": "李明",
+        "contact": "123-456-7890",
+        "department": "农业部",
+        "view": {
+          "center": [113.521067, 22.736897],
+          "zoom": 19.78,
+          "pitch": 44.63636363636364,
+          "rotation": 101.3
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.521165049680874, 22.736183416894061]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "facility_type": "warehouse",
+        "name": "粮食仓库",
+        "area": 1800,
+        "manager": "王强",
+        "contact": "987-654-3210",
+        "department": "粮食管理局",
+        "view": {
+          "center": [113.519176, 22.739802],
+          "zoom": 18.47,
+          "pitch": 61.81818181818182,
+          "rotation": 4.9
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.518154546562684, 22.739525876629823]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 3,
+        "facility_type": "service",
+        "name": "西区服务站",
+        "area": 900,
+        "manager": "张华",
+        "contact": "555-123-4567",
+        "department": "公共服务中心",
+        "view": {
+          "center": [113.52691, 22.736811],
+          "zoom": 19.38,
+          "pitch": 42.99999999999991,
+          "rotation": 189.59999999999994
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.526602270141467, 22.736835883349325]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 4,
+        "facility_type": "inspection",
+        "name": "检测中心",
+        "area": 1600,
+        "manager": "陈丽",
+        "contact": "666-987-6543",
+        "department": "质量检测中心",
+        "view": {
+          "center": [113.540067, 22.729254],
+          "zoom": 17.29,
+          "pitch": 21.363636363636452,
+          "rotation": 18.400000000000055
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.53977179043595, 22.729097860125417]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5,
+        "facility_type": "warehouse",
+        "name": "农收仓库",
+        "area": 2000,
+        "manager": "赵明",
+        "contact": "444-555-6666",
+        "department": "农业管理中心",
+        "view": {
+          "center": [113.538222, 22.736011],
+          "zoom": 18.79,
+          "pitch": 67.09090909090907,
+          "rotation": 91.90000000000009
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.537808667680181, 22.735868630446337]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 6,
+        "facility_type": "service",
+        "name": "东区服务站B",
+        "area": 950,
+        "manager": "刘伟",
+        "contact": "777-888-9999",
+        "department": "社区服务站",
+        "view": {
+          "center": [113.533678, 22.732991],
+          "zoom": 19.72,
+          "pitch": 40.90909090909102,
+          "rotation": 8.700000000000054
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.5332986363929, 22.732984041907244]
+      }
+    }
+  ]
+}

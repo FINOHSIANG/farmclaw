@@ -1,0 +1,26 @@
+// 专用农具轮廓补齐通用图标库没有的机型；路径均为本项目绘制，使用 24 单位网格。
+export const FARM_ASSET_GLYPHS = Object.freeze({
+  tractor: '<path d="M3 14h17v3H3zM5 14V5h7l2 6h5v3M7 7h4l1 4H7zM17 11V6h2"/><path d="M5 17h13a2 2 0 0 1 0 4H5a2 2 0 0 1 0-4zM6 19h.01M10 19h.01M14 19h.01M18 19h.01"/>',
+  harvester: '<path d="M4 14V7h7v7M5 7V4h7l2 5h4v7H8M6 9h3v3H6zM14 6h4l3-3M18 13l3 3M18 18h4M20 16v4M22 16v4"/><path d="M3 17a3 3 0 1 0 6 0a3 3 0 1 0-6 0M13 18a2 2 0 1 0 4 0a2 2 0 1 0-4 0"/>',
+  sprayer: '<path d="M8 14V8h8v6M9 8V4h6v4M10 6h3M8 10H2v3M16 10h6v3M2 13l-1 3M5 13l-1 3M19 13l1 3M22 13l1 3M9 14h6"/><path d="M6 15h3v6H6zM15 15h3v6h-3z"/>',
+  seeder: '<path d="M3 7h18l-2 6H5zM6 4h4v3M14 4h4v3M4 14h16M7 13v5l-2 3M12 13v5l-2 3M17 13v5l-2 3M3 14v5M21 14v5M1 19h4M19 19h4"/>',
+  rover: '<path d="M5 12h14l2 5H3zM8 12V8h8v4M12 8V3M9 3h6M10 10h4M8 17h8"/><path d="M4 18a2 2 0 1 0 4 0a2 2 0 1 0-4 0M16 18a2 2 0 1 0 4 0a2 2 0 1 0-4 0"/>',
+  mower: '<path d="M4 12l3-4h10l3 4v5H4zM8 8V5h8v3M8 12h8M10 15h4M3 17h4v4H3zM17 17h4v4h-4z"/>',
+  camera: '<path d="M3 5h13l4 3-3 6-14-5zM18 9l3 1-1 3-3-1M10 13v4h7v4M14 21h6M5 7l8 3"/>',
+  drone: '<path d="M9 9h6l2 3-2 3H9l-2-3zM10 11h4M12 9V6M10 15l-1 3M14 15l1 3M9 10L5 6M15 10l4-4M9 14l-4 4M15 14l4 4M2 5h6M16 5h6M2 19h6M16 19h6"/>',
+  'water-control': '<path d="M2 10h5v8H2M7 12h5V8h8v10H7M14 8V5h4v3M12 11h8M14 14h4M5 21h16M9 18v3M18 18v3"/>',
+  valve: '<path d="M2 12h5l10 7V9L7 19v-7M17 12h5M2 10v9M22 10v9M12 12V5M8 5h8M12 3v4"/>',
+  climate: '<path d="M3 3h18v18H3zM12 11C6 5 4 10 8 12M13 12c6-6 1-8-1-4M12 13c6 6 8 1 4-1M11 12c-6 6-1 8 1 4"/><path d="M11 12a1 1 0 1 0 2 0a1 1 0 1 0-2 0"/>',
+  light: '<path d="M6 3v4M18 3v4M3 7h18v5H3zM6 12v3M12 12v3M18 12v3M5 18l-2 3M12 18v4M19 18l2 3"/>',
+  dosing: '<path d="M3 8h7v13H3zM4 5h5v3M14 8h7v13h-7zM15 5h5v3M10 16h4M12 16V3h6M5 12h3M16 12h3M6 16v2M17 16v2"/>',
+  aquaculture: '<path d="M3 15h18M5 13v5M10 13v5M15 13v5M20 13v5M8 11V6h8v5M12 6V3M2 21l3-1 4 1 4-1 4 1 5-1M5 8L2 6M19 8l3-2"/>',
+  sensor: '<path d="M8 7h8v10H8zM10 10h4M10 13h2M12 17v5M5 4L3 2M19 4l2-2M6 8H2M18 8h4M12 7V2"/>',
+  'crop-point': '<path d="M3 20h18M5 16h14M7 12h10M12 20V8M12 12c-4 0-6-2-6-5 4 0 6 2 6 5M12 15c4 0 6-2 6-5-4 0-6 2-6 5"/>',
+  'aquaculture-point': '<path d="M3 12c5-6 11-6 17 0-6 6-12 6-17 0zM20 12l2-3v6zM15 10l.01 0M4 19l4-1 4 1 4-1 4 1"/>',
+  fence: '<path d="M3 6h18M5 6v14M19 6v14M8 6v14M16 6v14M5 11h14M5 16h14M3 20h4M17 20h4"/>',
+  'alert-climate': '<path d="M5 14a4 4 0 0 1 1-7 6 6 0 0 1 11 2 3 3 0 0 1 1 5H5zM12 14l-3 5h3l-1 3 5-6h-3l2-2"/>',
+  'alert-pest': '<path d="M9 8a3 3 0 0 1 6 0M8 9h8v6a4 4 0 0 1-8 0zM12 9v11M3 12h4M17 12h4M4 6l4 3M20 6l-4 3M4 19l4-3M20 19l-4-3"/>',
+  'value-crop': '<path d="M3 20h18M5 17v-5h3v5M10 17V8h3v9M15 17V4h3v13M20 7c-4 0-6 2-6 5 4 0 6-2 6-5"/>',
+  'value-aquaculture': '<path d="M3 20h18M5 17v-4h3v4M10 17V9h3v8M15 17V5h3v12M4 7c4-4 8-4 12 0-4 4-8 4-12 0zM16 7l3-2v4z"/>',
+  'field-label': '<path d="M3 20h18M5 17l3-5 3 5 3-8 4 8M4 7h8M8 4v6M15 4v6M12 7h7"/>'
+})

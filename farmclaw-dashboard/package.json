@@ -1,16 +1,52 @@
 {
-  "name": "farmclaw-dashboard",
+  "name": "farmclaw-digital-farm-dashboard",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:ai": "node scripts/validate-ai-managed.mjs",
+    "test:ai-registry": "node scripts/validate-ai-registry.mjs",
+    "test:command-composer": "node scripts/validate-command-composer.mjs",
+    "test:facility-icons": "node scripts/validate-facility-icons.mjs",
+    "test:tabler-icons": "node scripts/validate-tabler-icons.mjs",
+    "test:fullscreen": "node scripts/validate-fullscreen.mjs",
+    "test:responsive-layout": "node scripts/validate-responsive-layout.mjs",
+    "test:workspace": "node scripts/validate-workspace.mjs",
+    "test:hud-events": "node scripts/validate-hud-events.mjs",
+    "test:desktop-bridge": "node scripts/validate-desktop-bridge.mjs",
+    "test:map-labels": "node scripts/validate-map-labels.mjs",
+    "test:map-controls": "node scripts/validate-map-controls.mjs",
+    "test:map-visuals": "node scripts/validate-map-visuals.mjs",
+    "test:twin-observation": "node scripts/validate-twin-observation.mjs",
+    "test:machinery": "node scripts/validate-machinery-monitor.mjs",
+    "test:operations": "node scripts/validate-operations-dashboard.mjs",
+    "test:production-dashboard": "node scripts/validate-production-dashboard.mjs",
+    "test:alert-center": "node scripts/validate-alert-center.mjs",
+    "test:value": "node scripts/validate-value-forecast.mjs",
+    "test:security": "node scripts/validate-security-data.mjs"
+  },
+  "dependencies": {
+    "@tweenjs/tween.js": "^25.0.0",
+    "3d-tiles-renderer": "^0.3.12",
+    "axios": "^1.7.7",
+    "dat.gui": "^0.7.9",
+    "html2canvas": "^1.4.1",
+    "lodash": "^4.17.21",
+    "maplibre-gl": "^5.24.0",
+    "three": "0.157.0",
+    "vue": "^3.5.20",
+    "vue-router": "^4.5.1"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^6.2.1",
-    "svelte": "^5.45.2",
-    "vite": "^7.3.1"
+    "@vitejs/plugin-vue": "^6.0.1",
+    "sass": "^1.90.0",
+    "unplugin-auto-import": "^20.1.0",
+    "vite": "^7.1.3"
+  },
+  "engines": {
+    "node": ">=20.19.0"
   }
 }

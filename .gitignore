@@ -26,7 +26,13 @@ farmclaw-dashboard/build/
 farmclaw-dashboard/.svelte-kit/
 farmclaw-dashboard/.env
 farmclaw-dashboard/.env.*
-farmclaw-dashboard/!.env.example
+!farmclaw-dashboard/.env.example
+desktop-shell/node_modules/
+desktop-shell/dist/
+desktop-shell/.dsh-home/
+farmclaw-dashboard/test-results/
+.playwright-cli/
+/output/
 
 # Editor
 .vscode/

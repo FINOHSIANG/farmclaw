@@ -1,0 +1,1170 @@
+{
+  "type": "FeatureCollection",
+  "name": "crop",
+  "crs": {
+    "type": "name",
+    "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "番石榴" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.520824304945506, 22.739899355509813]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "番石榴" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.519947842245642, 22.739402857250131]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "番石榴" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.519734867042374, 22.738756168887218]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "番石榴" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.519405020159155, 22.73803252270169]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "番石榴" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.519537398061559, 22.737221587962736]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.531322980383393, 22.738622726702229]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.532607063471673, 22.737937491282839]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.53387551385039, 22.737270068166794]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.531149292041491, 22.738326220424231]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.532409628027096, 22.737653554312669]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.533962256390311, 22.736806425674139]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.531118371397, 22.737945655689149]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 0.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.533612024818581, 22.73655400236175]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.531993246373347, 22.737030228086955]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.53176355900132, 22.736733488923427]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.532032438264508, 22.736168642963442]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 0.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.534280023338638, 22.735340635948631]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 0.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.534489621086678, 22.73565455375379]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.53176727026532, 22.735888055746884]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.529820573770408, 22.736575400201922]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "葡萄" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.532322094148739, 22.735174495068822]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.529662565911181, 22.736158594338722]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "葡萄" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.530718331781884, 22.735512845622409]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.529043464271851, 22.736070356416199]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.528872803833835, 22.735835760081091]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "火龙果" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.53004856537892, 22.735411160739034]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "火龙果" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.529855283587025, 22.735145751325369]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.52865830539352, 22.735598385975958]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.529204306376428, 22.735203596076754]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "火龙果" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.529655459966591, 22.734872860839758]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "火龙果" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.529391374483794, 22.734531144082183]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.528794659869703, 22.73497129676004]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.528262728359891, 22.735385572368941]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "葡萄" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.533852171068588, 22.730317668969459]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "葡萄" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.534153257446704, 22.730587995057611]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "葡萄" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.534159711212567, 22.731282607995531]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "葡萄" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.535158625853214, 22.730351748856023]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "葡萄" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.535330529160049, 22.7294788846119]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "葡萄" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.535373918122801, 22.730696932053895]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "葡萄" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.534356800362644, 22.731599425737475]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "葡萄" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.535158228338574, 22.7312527499227]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "葡萄" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.535879461662489, 22.72905221197923]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "葡萄" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.536251862704361, 22.729788137549441]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "葡萄" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.53653117563114, 22.729285330989352]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "葡萄" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.536819536604668, 22.72902724554303]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "葡萄" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.536212253108218, 22.728728629222715]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "葡萄" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.536387543501291, 22.728566483940977]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "番石榴" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.540766410635825, 22.734262744973993]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "番石榴" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.540896385282323, 22.734744101720121]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "番石榴" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.541198684821069, 22.735161847973178]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "番石榴" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.541581847565979, 22.735512573400442]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 0.0, "crop": "番石榴" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.543171091435752, 22.734852436391066]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 0.0, "crop": "番石榴" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.543443926129683, 22.735072096557403]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 0.0, "crop": "番石榴" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.542384805365032, 22.736020671583528]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 0.0, "crop": "番石榴" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.541267959076066, 22.736156291204679]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "番石榴" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.536634702019043, 22.731672063409498]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "番石榴" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.537032947335035, 22.732008910234711]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.53746552523846, 22.732296586511445]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.537830689634887, 22.732729112567128]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 0.0, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.537047060425593, 22.734300242780691]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 0.0, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.537468880139514, 22.734527267575931]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 0.0, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.537768259116987, 22.734832108221639]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 0.0, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.539006668557093, 22.732765379733596]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 0.0, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.539339993851314, 22.733102374584018]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 0.0, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.539693273289387, 22.733448740630052]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "红薯" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.541858080109961, 22.727623660840049]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "红薯" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.538002447329887, 22.727099305848547]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "红薯" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.53833606782004, 22.727512619487545]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 0.0, "crop": "红薯" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.538954603808193, 22.727745068446168]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "火龙果" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.542349058180179, 22.736817794376034]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.543581503309071, 22.735926826391395]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.544331440934414, 22.735403133011051]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "火龙果" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.542428477394679, 22.737430278946942]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.543617102202134, 22.736529166022155]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.544189553634538, 22.736103782178862]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.544712035175465, 22.735716703559962]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.544415310351582, 22.736384621676976]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "火龙果" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.542583395080939, 22.737893022297222]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.544291130537658, 22.736843222201873]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.543136463034401, 22.738244291486996]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.544969553288524, 22.736918450489323]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 0.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.545575245840951, 22.737078193931165]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.544762338534966, 22.73762342037984]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.544463729965628, 22.737824710467027]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.544165974331165, 22.738025193218292]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.543879834491506, 22.738233144451264]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.543592894164462, 22.738442186247926]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.543306644576461, 22.738640340776939]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.543021829713311, 22.738833082887581]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.542727252648518, 22.739047880208084]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.543012429681255, 22.739404172726054]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 0.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.543448848510323, 22.739108871294981]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.544040814103553, 22.738700472712189]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.545080672356619, 22.737980507546443]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.546153651251331, 22.737245363045758]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.54518629690071, 22.73856604378593]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.545461596837711, 22.738995313278785]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.545972984460704, 22.739237348279858]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.546144101809048, 22.739739145212312]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.546546968915791, 22.740054926921324]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.546854670301911, 22.740285435416563]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.547286324080872, 22.740649421517674]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.547798971601509, 22.741007371559448]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.55164907872674, 22.738317943107525]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.551370662845883, 22.737793640715818]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.550735876043944, 22.737765505544143]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.550612297621726, 22.737321025801268]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.550301549482839, 22.736929954597468]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.549928175287832, 22.736584231769424]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.549507703690466, 22.736185742152653]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.549108603445646, 22.735859311264171]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.548702016961428, 22.735484093111868]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.54838258524569, 22.735102258782483]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.547966084069756, 22.734770271317245]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.54762813249279, 22.734397259759806]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.54724727332173, 22.733987057353055]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.546840843463343, 22.733674697021925]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.546411309348883, 22.733296259700992]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.546097455339719, 22.732940402731618]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.545834344426822, 22.732650158106754]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.545487185618441, 22.732329212773113]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.545103248408751, 22.732001102043437]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.544667604418038, 22.731739118498595]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.527653610651697, 22.735332246500498]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.527417241047914, 22.735035981190435]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.528095618308328, 22.734112557714024]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.529402804630166, 22.733537749408011]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.528031181011769, 22.733664807954547]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.526562704337252, 22.734314728056905]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.527793843141211, 22.733241044432418]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.525824541554201, 22.733970417920133]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.523914647262103, 22.736695338615213]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.524256540446999, 22.736972153912387]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": null },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.524296202192303, 22.737460680378007]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.523397088851468, 22.734909817990435]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "香蕉" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.523600333332297, 22.735226330305863]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "红薯" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.53774396813499, 22.742496775970732]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "红薯" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.540168305796627, 22.742946035608533]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "红薯" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.536660191386758, 22.728354446904067]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "红薯" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.537222880575413, 22.728955267607112]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": 1.0, "crop": "红薯" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.537131764008322, 22.729440985979419]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": null, "used": null, "crop": "红薯" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.538087657627145, 22.733054034750477]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": null,
+        "used": -9.2233720368547758e18,
+        "crop": "红薯"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.539475596785806, 22.734070328611761]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": null,
+        "used": -9.2233720368547758e18,
+        "crop": "红薯"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.54058420488424, 22.733681728296926]
+      }
+    }
+  ]
+}

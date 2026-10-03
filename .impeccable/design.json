@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-25T20:40:00+08:00",
+  "title": "Design System: Farmclaw Operations Console",
+  "extensions": {
+    "colorMeta": {
+      "operations-canvas": { "role": "neutral", "displayName": "Operations Canvas", "canonical": "oklch(15% 0.025 225)", "tonalRamp": ["oklch(15% 0.025 225)", "oklch(25% 0.025 225)", "oklch(35% 0.025 225)", "oklch(47% 0.025 225)", "oklch(60% 0.025 225)", "oklch(72% 0.02 225)", "oklch(84% 0.012 225)", "oklch(95% 0.006 225)"] },
+      "precision-cyan": { "role": "primary", "displayName": "Precision Cyan", "canonical": "oklch(82% 0.15 184)", "tonalRamp": ["oklch(15% 0.08 184)", "oklch(27% 0.1 184)", "oklch(39% 0.12 184)", "oklch(51% 0.14 184)", "oklch(63% 0.15 184)", "oklch(75% 0.15 184)", "oklch(86% 0.1 184)", "oklch(95% 0.04 184)"] }
+    },
+    "typographyMeta": {
+      "headline": { "displayName": "Headline", "purpose": "品牌与专题标题" },
+      "body": { "displayName": "Body", "purpose": "运营信息与解释" },
+      "label": { "displayName": "System Label", "purpose": "时间、编号与数据标签" }
+    },
+    "shadows": [
+      { "name": "panel-ambient", "value": "0 18px 48px rgba(0, 7, 12, 0.38)", "purpose": "只用于控制面与地图的结构分离" }
+    ],
+    "motion": [
+      { "name": "state-fast", "value": "180ms cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "按钮、标签和面板状态反馈" }
+    ],
+    "breakpoints": [
+      { "name": "compact", "value": "600px" },
+      { "name": "workspace", "value": "900px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "当前主操作，精密青实色。",
+      "html": "<button class=\"ds-btn-primary\">立即评估</button>",
+      "css": ".ds-btn-primary{padding:9px 14px;border:1px solid #48E4D1;border-radius:4px;background:#48E4D1;color:#07151D;font:650 13px Inter,Segoe UI,sans-serif;transition:background 180ms cubic-bezier(.16,1,.3,1)}.ds-btn-primary:hover{background:#73EDDD}.ds-btn-primary:focus-visible{outline:2px solid #E7F4F3;outline-offset:2px}"
+    },
+    {
+      "name": "Operations Input",
+      "kind": "input",
+      "description": "深色平面指令输入。",
+      "html": "<input class=\"ds-input\" placeholder=\"输入农场指令\">",
+      "css": ".ds-input{width:280px;padding:10px 12px;border:1px solid #31535B;border-radius:4px;background:#0D212B;color:#E7F4F3;font:13px Inter,Segoe UI,sans-serif}.ds-input:focus{outline:none;border-color:#48E4D1;box-shadow:0 0 0 2px rgba(72,228,209,.18)}"
+    },
+    {
+      "name": "Topic Navigation",
+      "kind": "nav",
+      "description": "单行任务工具带。",
+      "html": "<nav class=\"ds-nav\"><button>生产态势</button><button class=\"is-active\">AI 托管</button><button>安全巡防</button></nav>",
+      "css": ".ds-nav{display:flex;gap:4px;padding:5px;border:1px solid #31535B;border-radius:6px;background:#0D212B}.ds-nav button{padding:8px 12px;border:0;border-radius:4px;background:transparent;color:#91A9AD}.ds-nav button:hover{background:#12303B;color:#E7F4F3}.ds-nav .is-active{background:#48E4D1;color:#07151D;font-weight:650}.ds-nav button:focus-visible{outline:2px solid #48E4D1;outline-offset:2px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Precision Field Station",
+    "overview": "在昏暗值守室中持续运行的专业农业工作站。未来感来自对齐、数据节奏、结构线与快速反馈，而不是装饰性霓虹。",
+    "keyCharacteristics": ["克制的深色工业表面", "精密青单一主强调", "语义状态双重表达", "平面分层"],
+    "rules": [
+      { "name": "Signal Discipline", "body": "精密青只表示当前和可操作，绝不作为大面积装饰背景。", "section": "colors" },
+      { "name": "Flat by Default", "body": "阴影只区分地图与控制面，不用于每张任务或每个统计项。", "section": "elevation" }
+    ],
+    "dos": ["Do 使用 1px 结构线、表面明度和间距建立层级。", "Do 为状态同时提供文字与颜色。"],
+    "donts": ["Don't 使用廉价霓虹与电竞大屏风格。", "Don't 使用大量玻璃面板、无意义辉光和同质卡片堆叠。"]
+  }
+}

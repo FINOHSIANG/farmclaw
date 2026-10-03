@@ -115,6 +115,10 @@ class GatewayServer:
             if client_node_id and client_node_id in self.nodes:
                 logging.info(f"节点注销: [{client_node_id}]")
                 del self.nodes[client_node_id]
+                await self._notify_observers({
+                    "type": "node_left",
+                    "node_id": client_node_id,
+                }, source_node=client_node_id)
             self.active_connections.remove(websocket)
             if websocket in self.observers:
                 self.observers.remove(websocket)

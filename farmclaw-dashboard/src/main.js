@@ -1,9 +1,8 @@
-import { mount } from 'svelte'
-import './app.css'
-import App from './App.svelte'
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router'
+import '@/style/reset.css'
+import 'maplibre-gl/dist/maplibre-gl.css'
+import '@/style/theme.css'
 
-const app = mount(App, {
-  target: document.getElementById('app'),
-})
-
-export default app
+createApp(App).use(router).mount('#app')

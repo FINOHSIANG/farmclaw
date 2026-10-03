@@ -1,0 +1,3 @@
+# Farmclaw keeps the official DSH web profile unchanged. This explicit empty
+# patch is passed to `dsh web` so future runtime overrides remain reviewable.
+[]
