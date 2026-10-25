@@ -10,6 +10,7 @@ import TablerIcon from '@/components/TablerIcon.vue'
 import WorkspaceSearch from './WorkspaceSearch.vue'
 import WorkspaceInbox from './WorkspaceInbox.vue'
 import WorkspaceObjectDetail from './WorkspaceObjectDetail.vue'
+import FieldControlPanel from './FieldControlPanel.vue'
 import { FACILITY_TYPE_LABELS, MACHINERY_ICON_IDS, equipmentIconKey, facilityIconDataUri } from '@/utils/facilityIcons.js'
 
 const props = defineProps({
@@ -29,12 +30,13 @@ const props = defineProps({
   alertCenter: { type: Object, required: true },
   objects: { type: Array, default: () => [] },
   selectedObject: { type: Object, default: null },
+  fieldControl: { type: Object, default: null },
   attentionItems: { type: Array, default: () => [] },
   objectHistory: { type: Array, default: () => [] },
   focusTaskId: { type: String, default: '' }
 })
 
-const emit = defineEmits(['command', 'topic', 'map-action', 'security-action', 'ai-action', 'value-filter', 'operations-action', 'alert-filter', 'fullscreen', 'fullscreen-error', 'workspace-layout', 'object-open', 'object-close', 'object-locate', 'object-acknowledge', 'inbox-open'])
+const emit = defineEmits(['command', 'topic', 'map-action', 'security-action', 'ai-action', 'value-filter', 'operations-action', 'alert-filter', 'fullscreen', 'fullscreen-error', 'workspace-layout', 'object-open', 'object-close', 'object-locate', 'object-acknowledge', 'field-control-exit', 'field-control-action', 'inbox-open'])
 const command = ref('')
 const activeTopic = ref('product')
 const activeActions = ref(new Set())
@@ -90,6 +92,14 @@ watch(() => props.selectedObject?.key, (key) => {
   eventsCollapsed.value = true
   inspectorVisible.value = true
   mobilePanelExpanded.value = true
+})
+watch(() => props.fieldControl?.key, (key) => {
+  if (!key) return
+  inboxOpen.value = false
+  eventsCollapsed.value = true
+  inspectorVisible.value = true
+  mobilePanelExpanded.value = true
+  legendExpanded.value = false
 })
 watch(() => props.topic, (topic) => {
   if (!TOPIC_CONTEXT[topic]) return
@@ -377,7 +387,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <main :class="['farmclaw-hud', 'workspace-v2', { 'mobile-panel-expanded': mobilePanelExpanded, 'has-attachments': attachments.length || fileError, 'pane-hidden': !inspectorVisible, 'events-open': inboxOpen || !eventsCollapsed, 'legend-open': legendExpanded, 'presentation-active': presentationMode }]">
+  <main :class="['farmclaw-hud', 'workspace-v2', { 'mobile-panel-expanded': mobilePanelExpanded, 'has-attachments': attachments.length || fileError, 'pane-hidden': !inspectorVisible, 'events-open': inboxOpen || !eventsCollapsed, 'legend-open': legendExpanded, 'presentation-active': presentationMode, 'field-control-active': fieldControl }]">
     <header v-if="!presentationMode" class="hud-header hud-panel">
       <div class="brand">
         <img class="brand-logo" :src="brandLogoUrl" alt="四时 SEASONS" />
@@ -390,7 +400,7 @@ onBeforeUnmount(() => {
           <span><small>数据连接</small><strong>{{ systemHealth.label }}</strong><em>{{ systemHealth.detail }}</em></span>
         </div>
         <div class="status-meta status-meta-secondary"><small>在线节点</small><strong>{{ onlineNodeDisplay }}</strong><em>{{ onlineNodeCaption }}</em></div>
-        <div class="status-meta"><small>当前分区</small><strong>{{ productionProfile.name }}</strong><em>只读观测</em></div>
+        <div class="status-meta"><small>{{ fieldControl ? '当前地块' : '当前分区' }}</small><strong>{{ fieldControl?.name || productionProfile.name }}</strong><em>{{ fieldControl ? '地块内控 · DRY RUN' : '只读观测' }}</em></div>
         <button class="workspace-inbox-trigger" type="button" :aria-expanded="inboxOpen" aria-label="待办中心" title="待办中心" @click="toggleInbox"><TablerIcon name="alert-triangle" :size="18" /><span>{{ globalAttentionCount }} 待办</span></button>
         <button class="workspace-event-trigger" type="button" :aria-expanded="!eventsCollapsed" :aria-label="eventsCollapsed ? '展开系统事件' : '收起系统事件'" title="系统日志" @click="toggleEvents"><TablerIcon name="activity" :size="18" /><span>日志</span></button>
         <button class="fullscreen-toggle" :class="{ active: presentationMode }" :aria-pressed="presentationMode" type="button" aria-label="切换大屏模式" title="进入对外展示大屏" @click="toggleFullscreen"><TablerIcon name="maximize" :size="16" /><span>大屏</span></button>
@@ -482,8 +492,9 @@ onBeforeUnmount(() => {
 
     <template v-if="!presentationMode">
 
-    <WorkspaceObjectDetail v-if="selectedObject" id="workspace-object-detail" :object="selectedObject" :items="attentionItems" :history="objectHistory" @close="emit('object-close')" @locate="emit('object-locate', $event)" @acknowledge="emit('object-acknowledge', $event)" @open-item="openInboxItem" />
-    <div v-show="!selectedObject" class="topic-panel-host">
+    <FieldControlPanel v-if="fieldControl" id="field-control-panel" :field="fieldControl" :readings="state.readings" :machinery="operationsDashboard.machinery.items" :connection="state.connection" @exit="emit('field-control-exit')" @locate="emit('object-locate', $event)" @action="emit('field-control-action', $event)" />
+    <WorkspaceObjectDetail v-else-if="selectedObject" id="workspace-object-detail" :object="selectedObject" :items="attentionItems" :history="objectHistory" @close="emit('object-close')" @locate="emit('object-locate', $event)" @acknowledge="emit('object-acknowledge', $event)" @open-item="openInboxItem" />
+    <div v-show="!selectedObject && !fieldControl" class="topic-panel-host">
     <section id="topic-panel-product" v-if="activeTopic === 'product'" class="telemetry-panel hud-panel" role="tabpanel" aria-labelledby="topic-tab-product">
       <div class="panel-heading">
         <div class="workspace-panel-title"><TablerIcon name="seedling" :size="19" aria-hidden="true" /><div><span>生产总览</span><strong>{{ productionProfile.name }}</strong></div></div>
@@ -625,11 +636,11 @@ onBeforeUnmount(() => {
     <button v-if="!presentationMode" class="mobile-panel-toggle" type="button" :aria-expanded="mobilePanelExpanded" :aria-label="mobilePanelExpanded ? '收起分析' : '展开分析'" @click="mobilePanelExpanded = !mobilePanelExpanded"><span>{{ mobilePanelExpanded ? '收起' : '展开' }}</span><span>分析</span></button>
 
     <div v-if="!presentationMode" class="workspace-pane-control">
-      <span>{{ productionProfile.area }}</span>
+      <span>{{ fieldControl ? `${fieldControl.name} · 地块内控` : productionProfile.area }}</span>
       <button type="button" :aria-expanded="inspectorVisible" :aria-label="inspectorVisible ? '收起分析面板' : '展开分析面板'" :title="inspectorVisible ? '收起分析面板' : '展开分析面板'" @click="inspectorVisible = !inspectorVisible"><TablerIcon :name="inspectorVisible ? 'arrow-left' : 'chevron-right'" :size="18" /><span>{{ inspectorVisible ? '收起' : '分析' }}</span></button>
     </div>
     <nav :class="['topic-bar', 'hud-panel', { 'has-attachments': attachments.length }]" aria-label="业务专题" role="tablist" @keydown="handleTopicKeydown">
-      <button v-for="item in workspaceTopics" :id="`topic-tab-${item.id}`" :key="item.id" :data-topic="item.id" :class="{ active: activeTopic === item.id }" :aria-selected="activeTopic === item.id" :aria-controls="activeTopic === item.id ? selectedObject ? 'workspace-object-detail' : `topic-panel-${item.id}` : undefined" :tabindex="activeTopic === item.id ? 0 : -1" :disabled="mapStatus !== 'ready'" role="tab" type="button" @click="selectTopic(item.id, $event)"><TablerIcon :name="item.icon" :size="17" /><span>{{ item.label }}</span></button>
+      <button v-for="item in workspaceTopics" :id="`topic-tab-${item.id}`" :key="item.id" :data-topic="item.id" :class="{ active: activeTopic === item.id }" :aria-selected="activeTopic === item.id" :aria-controls="activeTopic === item.id ? fieldControl ? 'field-control-panel' : selectedObject ? 'workspace-object-detail' : `topic-panel-${item.id}` : undefined" :tabindex="activeTopic === item.id ? 0 : -1" :disabled="mapStatus !== 'ready'" role="tab" type="button" @click="selectTopic(item.id, $event)"><TablerIcon :name="item.icon" :size="17" /><span>{{ item.label }}</span></button>
       <span class="topic-scroll-hint" aria-hidden="true"><TablerIcon name="chevron-right" :size="15" /></span>
     </nav>
 

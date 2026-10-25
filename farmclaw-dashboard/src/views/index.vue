@@ -40,6 +40,7 @@ const securityState = ref({ fences: [], cameras: [], armedCount: 0, onlineCount:
 const selectedSecurityFeature = ref(null)
 const selectedMachinery = ref(null)
 const selectedObject = shallowRef(null)
+const fieldControl = shallowRef(null)
 const mapObjects = shallowRef([])
 const objectHistory = ref([])
 const focusTaskId = ref('')
@@ -81,19 +82,45 @@ function recordObjectAction(object, text) {
 
 function receiveObjectSelection(record) {
   if (!record) { selectedObject.value = null; return }
+  fieldControl.value = null
   const alert = record.category === 'alert' && alertCenter.value.alerts.find(item => item.id === record.id)
   const next = alert ? alertObjectRecord(alert, { ...record, content: undefined }) : record
   if (selectedObject.value?.key !== next.key) recordObjectAction(next, '查看对象档案')
   selectedObject.value = next
 }
 
+function receiveFieldSelection(record) {
+  fieldControl.value = record || null
+  selectedObject.value = null
+  if (!record) return
+  if (activeTopic.value !== 'product') activeTopic.value = 'product'
+  recordObjectAction(record, '进入地块内部控制状态')
+  farmclaw.pushEvent('FIELD.CONTROL.ENTER', `已进入 ${record.name} 地块内控视图；控制保持本地 Dry Run`)
+}
+
+function exitFieldControl({ overview = true } = {}) {
+  const current = fieldControl.value
+  fieldControl.value = null
+  selectedObject.value = null
+  if (mapProvider !== 'amap' && freeMapAdapter) {
+    if (overview) freeMapAdapter.freeMapGoToCenter()
+    else freeMapAdapter.clearFieldControl?.()
+  }
+  if (current) farmclaw.pushEvent('FIELD.CONTROL.EXIT', `已退出 ${current.name} 地块内控视图`)
+}
+
 function closeWorkspaceObject() {
+  if (fieldControl.value) {
+    exitFieldControl()
+    return
+  }
   selectedObject.value = null
   freeMapAdapter?.clearWorkspaceSelection()
 }
 
 function handleObjectOpen(object) {
   if (!object) return
+  if (object.sourceId === 'farm' && freeMapAdapter?.focusField?.(object.id)) return
   if (activeTopic.value !== object.topic) handleTopic(object.topic)
   if (object.coordinates && freeMapAdapter?.focusWorkspaceObject(object)) return
   freeMapAdapter?.clearWorkspaceSelection()
@@ -113,7 +140,18 @@ async function handleInboxOpen(item) {
 }
 
 function locateWorkspaceObject(object) {
+  if (object.sourceId === 'farm' && freeMapAdapter?.focusField?.(object.id)) {
+    recordObjectAction(object, '重新定位地块内控视图')
+    return
+  }
   if (object.coordinates && freeMapAdapter?.focusWorkspaceObject(object)) recordObjectAction(object, '定位地图对象')
+}
+
+function handleFieldControlAction(action) {
+  if (!action?.fieldId || !action?.label) return
+  const stateLabel = action.active ? '已执行本地模拟' : '已停止本地模拟'
+  farmclaw.pushEvent('FIELD.CONTROL.DRY_RUN', `${action.fieldName} · ${action.label} ${stateLabel}，未向现场设备下发`)
+  if (fieldControl.value) recordObjectAction(fieldControl.value, `${action.label} ${stateLabel}`)
 }
 
 function acknowledgeWorkspaceObject(object) {
@@ -246,6 +284,7 @@ onMounted(async () => {
         selectedMachinery.value = machine
         if (machine) farmclaw.pushEvent('MACHINERY.SELECT', `农机孪生已选中：${machine.name} · ${machine.statusLabel}`)
       })
+      freeMapAdapter.onFieldSelect(receiveFieldSelection)
       securityState.value = freeMapAdapter.getSecurityState()
       mapObjects.value = freeMapAdapter.getWorkspaceObjects()
       freeMapAdapter.onObjectSelect(receiveObjectSelection)
@@ -349,6 +388,7 @@ function handleWorkspaceLayout(layout) {
 
 function handleTopic(topic) {
   if (mapStatus.value !== 'ready') return
+  if (fieldControl.value) exitFieldControl({ overview: false })
   closeWorkspaceObject()
   activeTopic.value = topic
   if (topic !== 'operations') selectedMachinery.value = null
@@ -1464,6 +1504,7 @@ function animateLayer(layer) {
     :alert-center="alertCenter"
     :objects="workspaceObjects"
     :selected-object="selectedObject"
+    :field-control="fieldControl"
     :attention-items="attentionItems"
     :object-history="selectedObjectHistory"
     :focus-task-id="focusTaskId"
@@ -1471,6 +1512,8 @@ function animateLayer(layer) {
     @object-close="closeWorkspaceObject"
     @object-locate="locateWorkspaceObject"
     @object-acknowledge="acknowledgeWorkspaceObject"
+    @field-control-exit="exitFieldControl"
+    @field-control-action="handleFieldControlAction"
     @inbox-open="handleInboxOpen"
     @command="handleCommand"
     @topic="handleTopic"

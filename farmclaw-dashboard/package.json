@@ -19,6 +19,7 @@
     "test:desktop-bridge": "node scripts/validate-desktop-bridge.mjs",
     "test:map-labels": "node scripts/validate-map-labels.mjs",
     "test:map-controls": "node scripts/validate-map-controls.mjs",
+    "test:field-control": "node scripts/validate-field-control.mjs",
     "test:map-visuals": "node scripts/validate-map-visuals.mjs",
     "test:twin-observation": "node scripts/validate-twin-observation.mjs",
     "test:machinery": "node scripts/validate-machinery-monitor.mjs",

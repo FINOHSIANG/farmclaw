@@ -10,6 +10,7 @@ import { applyTwinObservationUpdate, buildTwinObservation, twinObservationUpdate
 import { mapObjectRecord } from '@/utils/workspaceModel.js'
 import { geoJsonBounds, buildOverviewLabels } from '@/utils/mapOverview.js'
 import { smoothLineGeoJson } from './mapPathSmoothing.js'
+import { buildFieldInteriorTwin } from './fieldInteriorTwin.js'
 
 export { getViewportPadding } from '@/utils/mapViewport.js'
 
@@ -113,6 +114,7 @@ const LOGICAL_LAYERS = {
   fenceLayer: ['farmclaw-fence-fill', 'farmclaw-fence-line', 'farmclaw-fence-icon', 'farmclaw-fence-label', 'farmclaw-fence-alert-label'],
   cameraLayer: ['farmclaw-camera-cone', 'farmclaw-camera-status', 'farmclaw-camera-icon', 'farmclaw-camera-label-compact', 'farmclaw-camera-label-detail', 'farmclaw-camera-alert-label'],
   selectionLayer: ['farmclaw-selection-fill', 'farmclaw-selection-line'],
+  fieldInternalLayer: ['farmclaw-field-internal-row-casing', 'farmclaw-field-internal-rows', 'farmclaw-field-internal-irrigation', 'farmclaw-field-internal-zone', 'farmclaw-field-internal-sensor', 'farmclaw-field-internal-valve', 'farmclaw-field-internal-label'],
   dronPathLayer: ['farmclaw-drone-path-casing', 'farmclaw-drone-path'],
   invadeLayer: ['farmclaw-invade-path-casing', 'farmclaw-invade-path']
 }
@@ -146,6 +148,7 @@ let droneCoordinates = []
 let invadeCoordinates = []
 let securityData
 let securitySelectionHandler
+let fieldSelectionHandler
 let valueForecastModel
 let machineryData
 let machinerySelectionHandler
@@ -160,6 +163,7 @@ let workspaceSourceData = new Map()
 let objectSelectionHandler
 let workspaceSelectionFeature = null
 let overviewMode = true
+let focusedFieldId = null
 
 function buildAlertEventData(data) {
   const groups = new Map()
@@ -179,6 +183,10 @@ function buildAlertEventData(data) {
 function syncFreeMapViewport() {
   const result = syncMapViewport(map, { ...workspaceLayout, presentation: mapPresentationMode })
   if (overviewMode) fitWorkspaceOverview(0)
+  else if (focusedFieldId) {
+    const feature = fieldFeatureById(focusedFieldId)
+    if (feature) focusFieldCamera(feature, 0)
+  }
   return result
 }
 
@@ -246,6 +254,7 @@ function applySelectionContext() {
   const selectedId = String(selectedMapFeatureId || '')
   const isolateSecurityTarget = currentTopic === 'security' && ['camera', 'fence'].includes(selectedMapFeatureKind) && Boolean(selectedId)
   const isolateMachineryTarget = currentTopic === 'operations' && selectedMapFeatureKind === 'machinery' && Boolean(selectedId)
+  const isolateFieldTarget = ['product', 'ai', 'value', 'alerts'].includes(currentTopic) && selectedMapFeatureKind === 'field' && Boolean(selectedId)
   const opacityFor = (selectedOpacity, contextOpacity) => selectedFeatureOpacity(selectedId, selectedOpacity, contextOpacity)
 
   setPaintPropertyIfPresent('farmclaw-camera-status', 'icon-opacity', isolateSecurityTarget ? opacityFor(1, 0.32) : 1)
@@ -263,6 +272,18 @@ function applySelectionContext() {
   setPaintPropertyIfPresent('farmclaw-machinery-icon', 'icon-opacity', isolateMachineryTarget ? opacityFor(1, 0.38) : 1)
   for (const layerId of ['farmclaw-machinery-label-compact', 'farmclaw-machinery-label-detail']) {
     setPaintPropertyIfPresent(layerId, 'text-opacity', isolateMachineryTarget ? opacityFor(1, 0.2) : 1)
+  }
+
+  if (isolateFieldTarget) {
+    setPaintPropertyIfPresent('farmclaw-farm', 'fill-opacity', ['case', ['==', ['to-string', ['get', 'twin_id']], selectedId], 0.82, 0.12])
+    setPaintPropertyIfPresent('farmclaw-farm-outline', 'line-opacity', ['case', ['==', ['to-string', ['get', 'twin_id']], selectedId], 0.98, 0.18])
+    setPaintPropertyIfPresent('farmclaw-farm-texture', 'fill-opacity', ['case', ['==', ['to-string', ['get', 'twin_id']], selectedId], 0.58, 0.04])
+  } else {
+    const profile = TOPIC_VISUAL_PROFILES[currentTopic] || TOPIC_VISUAL_PROFILES.product
+    const satelliteScale = satelliteVisible ? 0.46 : 1
+    setPaintPropertyIfPresent('farmclaw-farm', 'fill-opacity', profile.farm * satelliteScale)
+    setPaintPropertyIfPresent('farmclaw-farm-outline', 'line-opacity', Math.min(0.92, profile.outlines * (satelliteVisible ? 0.82 : 1)))
+    setPaintPropertyIfPresent('farmclaw-farm-texture', 'fill-opacity', profile.texture * (satelliteVisible ? 0.48 : 1))
   }
 }
 
@@ -475,6 +496,30 @@ function addBusinessLayers() {
   }
 }
 
+function addFieldInternalLayers() {
+  const layers = [
+    { id: 'farmclaw-field-internal-row-casing', type: 'line', source: 'field-internal', filter: ['==', ['get', 'kind'], 'crop-row'], minzoom: 16.4, layout: { visibility: 'none', 'line-cap': 'round' }, paint: { 'line-color': '#07151d', 'line-width': ['interpolate', ['linear'], ['zoom'], 16.4, 1.45, 19, 2.1], 'line-opacity': 0.62 } },
+    { id: 'farmclaw-field-internal-rows', type: 'line', source: 'field-internal', filter: ['==', ['get', 'kind'], 'crop-row'], minzoom: 16.4, layout: { visibility: 'none', 'line-cap': 'round' }, paint: { 'line-color': '#91d9a0', 'line-width': ['interpolate', ['linear'], ['zoom'], 16.4, 0.62, 19, 1.05], 'line-opacity': 0.92 } },
+    { id: 'farmclaw-field-internal-irrigation', type: 'line', source: 'field-internal', filter: ['in', ['get', 'kind'], ['literal', ['irrigation-main', 'irrigation-branch']]], minzoom: 16.2, layout: { visibility: 'none', 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': ['match', ['get', 'kind'], 'irrigation-main', '#56f7e8', '#58b9e9'], 'line-width': ['match', ['get', 'kind'], 'irrigation-main', 1.7, 0.85], 'line-opacity': 0.9 } },
+    { id: 'farmclaw-field-internal-zone', type: 'line', source: 'field-internal', filter: ['==', ['get', 'kind'], 'zone-divider'], minzoom: 16.1, layout: { visibility: 'none', 'line-cap': 'round' }, paint: { 'line-color': '#9bb6b7', 'line-width': 0.55, 'line-opacity': 0.46, 'line-dasharray': [2, 2.4] } },
+    { id: 'farmclaw-field-internal-sensor', type: 'symbol', source: 'field-internal', filter: ['==', ['get', 'kind'], 'sensor'], minzoom: 16.4, layout: { visibility: 'none', 'icon-image': FACILITY_ICON_IDS.sensor, 'icon-size': ['interpolate', ['linear'], ['zoom'], 16.4, 0.58, 19, 0.82], 'icon-allow-overlap': true, 'icon-ignore-placement': true, 'icon-pitch-alignment': 'viewport', 'text-field': ['get', 'label'], 'text-font': ['Noto Sans Regular'], 'text-size': 10, 'text-offset': [0, 2.25], 'text-anchor': 'top', 'text-optional': true }, paint: { 'icon-opacity': ['match', ['get', 'status'], 'attention', 1, 0.92], 'text-color': ['match', ['get', 'status'], 'attention', '#f0b95a', '#d7f4e2'], 'text-halo-color': '#07151d', 'text-halo-width': 2 } },
+    { id: 'farmclaw-field-internal-valve', type: 'symbol', source: 'field-internal', filter: ['==', ['get', 'kind'], 'valve'], minzoom: 16.4, layout: { visibility: 'none', 'icon-image': FACILITY_ICON_IDS.valve, 'icon-size': ['interpolate', ['linear'], ['zoom'], 16.4, 0.58, 19, 0.82], 'icon-allow-overlap': true, 'icon-ignore-placement': true, 'icon-pitch-alignment': 'viewport', 'text-field': ['get', 'label'], 'text-font': ['Noto Sans Regular'], 'text-size': 10, 'text-offset': [0, 2.25], 'text-anchor': 'top', 'text-optional': true }, paint: { 'icon-opacity': 0.94, 'text-color': '#8de8df', 'text-halo-color': '#07151d', 'text-halo-width': 2 } },
+    { id: 'farmclaw-field-internal-label', type: 'symbol', source: 'field-internal', filter: ['==', ['get', 'kind'], 'zone-label'], minzoom: 16.1, layout: { visibility: 'none', 'text-field': ['get', 'label'], 'text-font': ['Noto Sans Regular'], 'text-size': 11, 'text-allow-overlap': false, 'text-padding': 8 }, paint: { 'text-color': '#e7f4f3', 'text-halo-color': '#07151d', 'text-halo-width': 2.3, 'text-halo-blur': 0.5 } }
+  ]
+  for (const layer of layers) map.addLayer(layer)
+}
+
+function clearFieldInterior() {
+  map?.getSource('field-internal')?.setData({ type: 'FeatureCollection', features: [] })
+}
+
+function showFieldInterior(feature) {
+  const internalTwin = buildFieldInteriorTwin(feature)
+  map?.getSource('field-internal')?.setData(internalTwin.geojson)
+  setLogicalVisibility('fieldInternalLayer', true)
+  return internalTwin.summary
+}
+
 function syncMobileAttribution() {
   const attribution = map?.getContainer()?.querySelector('details.maplibregl-ctrl-attrib')
   if (!attribution) return
@@ -623,6 +668,7 @@ export async function initFreeMap({ dom, center = DEFAULT_CENTER, zoom = DEFAULT
   map.addSource('security-labels', { type: 'geojson', data: buildSecurityLabelData() })
   map.addSource('camera-focus', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } })
   map.addSource('map-selection', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } })
+  map.addSource('field-internal', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } })
   map.addSource('satellite', {
     type: 'raster',
     tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],
@@ -648,6 +694,7 @@ export async function initFreeMap({ dom, center = DEFAULT_CENTER, zoom = DEFAULT
   droneCoordinates = flattenLineCoordinates(datasets.find(([id]) => id === 'drone-path')?.[1])
   invadeCoordinates = flattenLineCoordinates(datasets.find(([id]) => id === 'invade-path')?.[1])
   addBusinessLayers()
+  addFieldInternalLayers()
   map.addLayer({
     id: 'farmclaw-overview-labels', type: 'symbol', source: 'overview-labels', maxzoom: 14.6,
     layout: { 'text-field': ['get', 'label'], 'text-font': ['Noto Sans Regular'], 'text-size': 13,
@@ -700,6 +747,8 @@ export function destroyFreeMap() {
   currentAlertType = 'all'
   currentAlertField = 'greenhouse-1'
   currentMachineryStatus = 'all'
+  fieldSelectionHandler = null
+  focusedFieldId = null
 }
 
 function setLogicalVisibility(logicalId, visible) {
@@ -818,6 +867,10 @@ export function onMachinerySelect(handler) {
   machinerySelectionHandler = typeof handler === 'function' ? handler : null
 }
 
+export function onFieldSelect(handler) {
+  fieldSelectionHandler = typeof handler === 'function' ? handler : null
+}
+
 export function setValueForecastFilter({ industry = 'all', category = 'all' } = {}) {
   if (!map?.getLayer('farmclaw-production')) return
   const dataFilters = []
@@ -835,6 +888,49 @@ export function freeMapGoToCenter() {
   clearWorkspaceSelection()
   overviewMode = true
   fitWorkspaceOverview()
+}
+
+function fieldFeatureById(fieldId) {
+  const targetId = String(fieldId || '')
+  return twinSourceData.get('farm')?.features?.find((feature) => String(feature.properties?.twin_id || feature.id || '') === targetId) || null
+}
+
+function focusFieldCamera(feature, duration = 900) {
+  const coordinates = feature.geometry?.type === 'Polygon' ? feature.geometry.coordinates.flat(1) : feature.geometry.coordinates.flat(2)
+  const bounds = coordinates.reduce((result, coordinate) => result.extend(coordinate), new maplibregl.LngLatBounds(coordinates[0], coordinates[0]))
+  const focusPadding = globalThis.window?.innerWidth <= 600 ? 42 : 72
+  const camera = map.cameraForBounds(bounds, { padding: focusPadding, maxZoom: 18.6 })
+  map.easeTo({
+    center: camera?.center || geometryRepresentativePoint(feature.geometry, DEFAULT_CENTER),
+    zoom: Math.max(17.35, Math.min(18.6, camera?.zoom || 17.35)),
+    pitch: 42,
+    bearing: -8,
+    duration
+  })
+}
+
+export function focusField(fieldId) {
+  const feature = fieldFeatureById(fieldId)
+  if (!feature || !map) return null
+  if (currentTopic !== 'product') setFreeTopic('product')
+  overviewMode = false
+  focusedFieldId = String(fieldId)
+  businessPopup?.remove()
+  businessPopup = null
+  clearCameraFocus()
+  focusFieldCamera(feature)
+  setMapSelection(feature)
+  const record = mapObjectRecord(feature, 'farm')
+  const fieldTwin = showFieldInterior(feature)
+  const selected = { ...record, coordinates: geometryRepresentativePoint(feature.geometry, null), geometry: feature.geometry, fieldTwin }
+  objectSelectionHandler?.(null)
+  fieldSelectionHandler?.(selected)
+  return selected
+}
+
+export function clearFieldControl() {
+  fieldSelectionHandler?.(null)
+  clearWorkspaceSelection()
 }
 
 export function onFreeMapViewChange(handler) {
@@ -997,6 +1093,7 @@ export function focusWorkspaceObject(record) {
   overviewMode = false
   if (record.sourceId === 'machinery') return focusMachinery(record.id)
   if (record.sourceId === 'security') return focusSecurityFeature(record.id)
+  if (record.sourceId === 'farm') return focusField(record.id)
   if (twinSourceData.has(record.sourceId)) return focusTwinObject(record.id)
   const data = workspaceSourceData.get(record.sourceId)
   const feature = data?.features?.find(candidate => mapObjectRecord(candidate, record.sourceId).key === record.key)
@@ -1137,16 +1234,26 @@ function clearCameraFocus() {
 function clearMapSelection() {
   selectedMapFeatureId = null
   selectedMapFeatureKind = null
+  focusedFieldId = null
   map?.getSource('map-selection')?.setData({ type: 'FeatureCollection', features: [] })
+  clearFieldInterior()
+  setLogicalVisibility('fieldInternalLayer', false)
   applySelectionContext()
   workspaceSelectionFeature = null
   objectSelectionHandler?.(null)
+  fieldSelectionHandler?.(null)
 }
 
 function setMapSelection(feature) {
   if (!feature?.geometry || !map?.getSource('map-selection')) return
   selectedMapFeatureId = (feature.properties?.kind ? feature.properties.id : feature.properties?.twin_id) || feature.properties?.id || feature.id || null
   selectedMapFeatureKind = feature.properties?.kind || null
+  if (!selectedMapFeatureKind && (feature.source === 'farm' || feature.properties?.twin_type === '种植地块')) selectedMapFeatureKind = 'field'
+  if (selectedMapFeatureKind !== 'field') {
+    focusedFieldId = null
+    clearFieldInterior()
+    setLogicalVisibility('fieldInternalLayer', false)
+  }
   const properties = { ...feature.properties }
   const anchor = {
     type: 'Feature',
@@ -1561,7 +1668,12 @@ function bindBusinessInteractions() {
     const foregroundLayers = FOREGROUND_INTERACTIVE_LAYERS.filter((layerId) => map.getLayer(layerId))
     if (foregroundLayers.length && map.queryRenderedFeatures(event.point, { layers: foregroundLayers }).length) return
     const feature = event.features?.find((candidate) => candidate.properties?.twin_id)
-    if (feature) showBusinessPopup(feature)
+    if (!feature) return
+    if (feature.properties?.twin_type === '种植地块' || feature.source === 'farm') {
+      focusField(feature.properties?.twin_id || feature.id)
+      return
+    }
+    showBusinessPopup(feature)
   })
 }
 

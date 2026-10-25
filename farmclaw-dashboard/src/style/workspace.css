@@ -703,7 +703,7 @@
 
 #app .workspace-v2:not(.presentation-active) .hud-header {
   position:absolute;
-  overflow:hidden;
+  overflow:visible;
   border-bottom-color:var(--ops-line);
   background:var(--ops-canvas);
   box-shadow:0 8px 28px oklch(10% .005 150 / .24),inset 0 -1px oklch(83% .12 154 / .08);
@@ -860,6 +860,121 @@
   box-shadow:inset 0 0 12px oklch(83% .12 154 / .06);
 }
 
+/* 统一悬浮立体图标：实体面层、底部厚度与交互抬升，不改变现有色彩体系。 */
+#app .workspace-v2 {
+  --ops-icon-face:color-mix(in oklch,var(--ops-surface-raised) 90%,var(--ops-accent) 10%);
+  --ops-icon-edge:color-mix(in oklch,var(--ops-canvas) 84%,var(--ops-accent) 16%);
+  --ops-icon-border:color-mix(in oklch,var(--ops-line) 78%,var(--ops-accent) 22%);
+  --ops-icon-highlight:oklch(94% .035 155 / .18);
+  --ops-icon-shadow:oklch(7% .018 180 / .46);
+}
+#app .workspace-v2 :is(.tabler-icon,.asset-glyph,.equipment-icon,.fence-glyph,.selected-camera-glyph,.selected-fence-glyph) {
+  transform:translate3d(0,-1px,0);
+  filter:drop-shadow(0 1px 0 oklch(94% .035 155 / .12)) drop-shadow(0 4px 5px var(--ops-icon-shadow));
+  transition:transform 160ms cubic-bezier(.2,.8,.2,1),filter 160ms ease,color 160ms ease,box-shadow 160ms ease;
+}
+#app .workspace-v2 button:hover > .tabler-icon,
+#app .workspace-v2 button:hover :is(.asset-glyph,.equipment-icon),
+#app .workspace-v2 :is(.category-row,.machinery-card,.equipment-row,.security-row):hover :is(.tabler-icon,.asset-glyph,.equipment-icon,.fence-glyph) {
+  transform:translate3d(0,-3px,0) scale(1.035);
+  filter:drop-shadow(0 1px 0 oklch(94% .035 155 / .18)) drop-shadow(0 7px 8px oklch(7% .018 180 / .5));
+}
+#app .workspace-v2 button:active > .tabler-icon {
+  transform:translate3d(0,1px,0) scale(.97);
+  filter:drop-shadow(0 1px 2px oklch(7% .018 180 / .42));
+}
+#app .workspace-v2:not(.presentation-active) :is(
+  .topic-bar button,
+  .map-tools button,
+  .map-view-switch button,
+  .legend-toggle,
+  .workspace-search-trigger,
+  .workspace-inbox-trigger,
+  .workspace-event-trigger,
+  .fullscreen-toggle,
+  .workspace-pane-control button,
+  .event-toggle,
+  .settings-button,
+  .attach-button
+) > .tabler-icon {
+  width:16px;
+  height:16px;
+  box-sizing:content-box;
+  padding:5px;
+  color:currentColor;
+  border:1px solid var(--ops-icon-border);
+  border-radius:4px;
+  background:var(--ops-icon-face);
+  box-shadow:inset 0 1px var(--ops-icon-highlight),inset 1px 0 oklch(94% .035 155 / .06),0 3px 0 var(--ops-icon-edge),0 7px 12px var(--ops-icon-shadow);
+}
+#app .workspace-v2:not(.presentation-active) :is(
+  .topic-bar button.active,
+  .map-tools button.active,
+  .map-view-switch button[aria-pressed="true"],
+  .legend-toggle[aria-expanded="true"],
+  .settings-button.active
+) > .tabler-icon {
+  color:var(--ops-electric);
+  border-color:color-mix(in oklch,var(--ops-accent) 70%,var(--ops-line) 30%);
+  background:color-mix(in oklch,var(--ops-surface-raised) 82%,var(--ops-accent) 18%);
+  box-shadow:inset 0 1px oklch(94% .035 155 / .24),0 3px 0 color-mix(in oklch,var(--ops-icon-edge) 72%,var(--ops-accent) 28%),0 8px 15px oklch(7% .018 180 / .52),0 0 12px oklch(83% .12 154 / .14);
+}
+#app .workspace-v2:not(.presentation-active) :is(
+  .workspace-panel-title > .tabler-icon,
+  .resource-heading .tabler-icon,
+  .category-name .tabler-icon,
+  .guardrail-list article > .tabler-icon,
+  .simulation-notice > .tabler-icon,
+  .field-assets p > .tabler-icon,
+  .production-attention-row > .tabler-icon:first-child
+) {
+  width:30px;
+  height:30px;
+  box-sizing:border-box;
+  padding:6px;
+  color:var(--ops-accent);
+  border:1px solid var(--ops-icon-border);
+  border-radius:4px;
+  background:var(--ops-icon-face);
+  box-shadow:inset 0 1px var(--ops-icon-highlight),0 3px 0 var(--ops-icon-edge),0 8px 14px var(--ops-icon-shadow);
+}
+#app .workspace-v2:not(.presentation-active) .workspace-panel-title > .tabler-icon {
+  width:34px;
+  height:34px;
+  padding:7px;
+}
+#app .workspace-v2:not(.presentation-active) .field-control-icon {
+  width:36px;
+  height:36px;
+  color:var(--ops-accent);
+  border:1px solid var(--ops-icon-border);
+  border-radius:4px;
+  background:var(--ops-icon-face);
+  box-shadow:inset 0 1px var(--ops-icon-highlight),0 3px 0 var(--ops-icon-edge),0 8px 14px var(--ops-icon-shadow);
+  transform:translate3d(0,-2px,0);
+  transition:transform 160ms cubic-bezier(.2,.8,.2,1),box-shadow 160ms ease;
+}
+#app .workspace-v2:not(.presentation-active) .field-twin-icon {
+  color:var(--ops-accent);
+  border-color:var(--ops-icon-border);
+  border-radius:4px;
+  background:var(--ops-icon-face);
+  box-shadow:inset 0 1px var(--ops-icon-highlight),0 3px 0 var(--ops-icon-edge),0 8px 14px var(--ops-icon-shadow);
+  transform:translate3d(0,-2px,0);
+}
+#app .workspace-v2:not(.presentation-active) .field-control-list article:hover .field-control-icon {
+  transform:translate3d(0,-4px,0);
+  box-shadow:inset 0 1px var(--ops-icon-highlight),0 4px 0 var(--ops-icon-edge),0 11px 17px var(--ops-icon-shadow);
+}
+#app .workspace-v2:not(.presentation-active) :is(.asset-glyph,.equipment-icon,.fence-glyph,.selected-camera-glyph,.selected-fence-glyph) {
+  box-sizing:border-box;
+  padding:4px;
+  border:1px solid var(--ops-icon-border);
+  border-radius:4px;
+  background:var(--ops-icon-face);
+  box-shadow:inset 0 1px var(--ops-icon-highlight),0 3px 0 var(--ops-icon-edge),0 8px 14px var(--ops-icon-shadow);
+}
+
 @keyframes ops-panel-enter {
   from { opacity:.72; transform:translateX(-8px); }
   to { opacity:1; transform:translateX(0); }
@@ -878,6 +993,25 @@
   #app .workspace-v2:not(.presentation-active) .map-context,
   #app .workspace-v2:not(.presentation-active) .map-tools,
   #app .workspace-v2:not(.presentation-active) .command-bar { backdrop-filter:blur(9px) saturate(115%); }
+  #app .workspace-v2:not(.presentation-active) :is(
+    .topic-bar button,
+    .map-tools button,
+    .map-view-switch button,
+    .legend-toggle,
+    .workspace-search-trigger,
+    .workspace-inbox-trigger,
+    .workspace-event-trigger,
+    .fullscreen-toggle,
+    .workspace-pane-control button,
+    .event-toggle,
+    .settings-button,
+    .attach-button
+  ) > .tabler-icon {
+    width:15px;
+    height:15px;
+    padding:4px;
+    box-shadow:inset 0 1px var(--ops-icon-highlight),0 2px 0 var(--ops-icon-edge),0 5px 9px var(--ops-icon-shadow);
+  }
 }
 
 @media (prefers-reduced-motion:reduce) {
